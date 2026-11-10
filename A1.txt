@@ -1,0 +1,8 @@
+# Computer Vision WS2026/27 - Assignments 0 and 1
+# Requires Python 3.12, 3.13 or 3.14
+jupyter>=1.1,<2
+matplotlib>=3.11,<4
+numpy>=2.5,<3
+opencv-python>=5.0,<6
+scikit-image>=0.26,<1
+scipy>=1.18,<2
