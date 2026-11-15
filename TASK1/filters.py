@@ -1,5 +1,5 @@
 #####TUWIEN - CV: Task1 - Scale-Invariant Blob Detection
-#####*********+++++++++*******++++INSERT GROUP NO. HERE
+#####*********+++++++++*******++++ Group 12
 from typing import Tuple
 import numpy as np
 import cv2
