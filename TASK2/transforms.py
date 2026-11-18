@@ -61,7 +61,37 @@ def get_transform(kp1: List[cv2.KeyPoint], kp2: List[cv2.KeyPoint], matches: Lis
     """
 
     # student_code start
-    raise NotImplementedError("TO DO in transforms.py")
+    N = 1000
+    T = 5.0
+
+    pts1 = np.array([kp1[m.queryIdx].pt for m in matches], dtype=np.float32)
+    pts2 = np.array([kp2[m.trainIdx].pt for m in matches], dtype=np.float32)
+
+    pts1_reshaped = pts1.reshape(-1, 1, 2)
+
+    best_inliers = []
+
+    for _ in range(N):
+        sample_idx = random.sample(range(len(matches)), 4)
+        sample_p1 = pts1[sample_idx]
+        sample_p2 = pts2[sample_idx]
+
+        H_cand = get_geometric_transform(sample_p1, sample_p2)
+
+        if not np.isfinite(H_cand).all():
+            continue
+
+        transformed_pts1 = cv2.perspectiveTransform(pts1_reshaped, H_cand).reshape(-1, 2)
+
+        distances = np.linalg.norm(transformed_pts1 - pts2, axis=1)
+
+        current_inliers = np.where(distances < T)[0].tolist()
+
+        if len(current_inliers) > len(best_inliers):
+            best_inliers = current_inliers
+
+    inliers = best_inliers
+    trans = get_geometric_transform(pts1[inliers], pts2[inliers])
     # student_code end
 
     return trans, inliers
