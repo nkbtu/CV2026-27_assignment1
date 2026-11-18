@@ -1,5 +1,5 @@
 #####TUWIEN - CV: Task2 - Image Stitching
-#####*********+++++++++*******++++INSERT GROUP NO. HERE
+#####*********+++++++++*******++++ 12
 from typing import List, Tuple
 from matplotlib.pyplot import angle_spectrum
 import numpy as np
