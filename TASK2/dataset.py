@@ -33,7 +33,27 @@ def get_panorama_data(path: str) -> Tuple[List[np.ndarray], List[cv2.KeyPoint], 
     """
     
     # student_code start
-    raise NotImplementedError("TO DO in dataset.py")
+    img_data = []
+    all_keypoints = []
+    all_descriptors = []
+
+    image_paths = sorted(glob.glob(os.path.join(path, '*')))
+    
+    sift = cv2.SIFT_create()
+
+    for img_path in image_paths:
+        img_bgr = cv2.imread(img_path)
+        if img_bgr is None:
+            continue
+
+        img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
+        img_gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
+
+        kp, des = sift.detectAndCompute(img_gray, None)
+
+        img_data.append(img_rgb)
+        all_keypoints.append(kp)
+        all_descriptors.append(des)
     # student_code end
 
     return img_data, all_keypoints, all_descriptors
